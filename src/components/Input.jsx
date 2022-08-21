@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getFieldError } from "utills/validate";
+import { getFieldError } from "utils/validate";
 import styled from "@emotion/styled";
 import { Common, Pretendard } from "styles/common";
 
@@ -36,6 +36,7 @@ function Input({ name, wasSubmitted, type, placeHolder, setValidate }) {
         aria-describedby={displayErrorMessage ? `${name}-error` : undefined}
         placeholder={placeHolder !== undefined ? placeHolder : ""}
       />
+      <br />
 
       {displayErrorMessage ? (
         <ErrorMessage role="alert" id={`${name}-error`}>
