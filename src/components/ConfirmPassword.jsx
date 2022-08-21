@@ -21,7 +21,7 @@ const ConfirmPassword = (props) => {
   };
 
   useEffect(() => {
-    if (errorMessage === null) {
+    if (errorMessage === null && value !== "") {
       setIsSame(true);
     } else {
       setIsSame(false);
