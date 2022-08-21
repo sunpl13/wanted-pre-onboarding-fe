@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ReactComponent as UnVisibleEye } from "assets/unVisibleEye.svg";
 import { ReactComponent as VisibleEye } from "assets/visibleEye.svg";
 import styled from "@emotion/styled";
-import { getFieldError } from "utills/validate";
+import { getFieldError } from "utils/validate";
 import { Common, Pretendard } from "styles/common";
 
 const PasswordInput = (props) => {
