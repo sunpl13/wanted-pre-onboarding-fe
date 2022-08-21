@@ -5,13 +5,14 @@ import { Common } from "styles/common";
 import styled from "@emotion/styled";
 import Todo from "api/todo";
 import { useEffect, useState } from "react";
+import { useRef } from "react";
 
 const TodoListContainer = () => {
   const [todos, setTodos] = useState([]);
-
+  const inputRef = useRef(null);
   const getTodos = async () => {
     const res = await Todo.getTodos();
-    console.log(res);
+
     if (res.status === 200) {
       setTodos(res.data);
     }
@@ -20,6 +21,10 @@ const TodoListContainer = () => {
   const insertHandler = async (todo) => {
     const res = await Todo.createTodo(todo);
     console.log(res);
+    if (res.status === 201) {
+      inputRef.current.value = ""; //성공하면 input 지우기
+      getTodos();
+    }
   };
 
   const deleteHandler = async (id) => {
@@ -47,7 +52,7 @@ const TodoListContainer = () => {
     <Container>
       <Title>To Do List!</Title>
       <InsertContainer>
-        <Insert insertHandler={insertHandler} />
+        <Insert insertHandler={insertHandler} refs={inputRef} />
       </InsertContainer>
       <ListContainer>
         <TodoList todoList={todos} deleteHandler={deleteHandler} changeHandler={changeHandler} />
