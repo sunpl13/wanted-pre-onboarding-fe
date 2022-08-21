@@ -3,41 +3,29 @@ import Input from "components/Input";
 import PasswordInput from "components/PasswordInput";
 import styled from "@emotion/styled";
 import { Common, Pretendard } from "styles/common";
+import { useNavigate } from "react-router-dom";
+import auth from "api/auth";
 
 const Login = () => {
-  // const router = useRouter();
+  const navigate = useNavigate();
   const [wasSubmitted, setwasSubmitted] = useState(false);
   const [email, setEmail] = useState(false);
   const [pwd, setPwd] = useState(false);
-  // const user = useUser({ redirectTo: "/", redirectIfFound: true });
 
-  // const loginHandler = useMutation(login, {
-  //   onSuccess: () => {
-  //     //성공 시
-  //     setToastState({
-  //       ...ToastState,
-  //       visible: true,
-  //       text: "로그인에 성공했습니다!",
-  //       toastType: "success",
-  //     });
-  //     setTimeout(() => {
-  //       router.push("/");
-  //     }, 1000);
-  //   },
-  //   onError: () => {
-  //     //실패 시
-  //   },
-  // });
-
-  const Login = (e) => {
+  const Login = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const fieldValues = Object.fromEntries(formData.entries());
     const loginEmail = fieldValues["이메일"];
     const pwd = fieldValues["비밀번호"];
-    // loginHandler.mutate({ email: loginEmail, pwd: pwd });
+    const res = await auth.login(loginEmail, pwd);
     setwasSubmitted(true);
+    if (res.status === 200) {
+      alert("환영합니다!");
+      navigate("/todo", { replace: true });
+    }
   };
+  console.log(email, pwd);
   const ckBtn = email && pwd;
 
   const Button = styled.button`
@@ -50,7 +38,7 @@ const Login = () => {
     padding-top: 8px;
     padding-bottom: 8px;
     background-color: ${Common.colors.BL500};
-    opacity: ${!ckBtn ? 1 : 0.35};
+    opacity: ${ckBtn ? 1 : 0.35};
     margin-bottom: 10px;
   `;
 
@@ -71,7 +59,7 @@ const Login = () => {
         </form>
       </div>
 
-      <OutLineButton>회원가입</OutLineButton>
+      <OutLineButton onClick={() => navigate("/register")}>회원가입</OutLineButton>
     </FormContainer>
   );
 };
