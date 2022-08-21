@@ -41,10 +41,8 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    alert(error.response.data.message);
     return Promise.reject(error);
   }
 );
 
-// 생성한 인스턴스를 익스포트 합니다.
 export default instance;

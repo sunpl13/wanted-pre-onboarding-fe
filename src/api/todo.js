@@ -11,7 +11,6 @@ class Todo {
 
   async getTodos() {
     const res = await api.get("/todos");
-    console.log(res);
     return res;
   }
 

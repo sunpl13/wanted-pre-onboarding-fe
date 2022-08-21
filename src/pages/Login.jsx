@@ -25,7 +25,7 @@ const Login = () => {
       navigate("/todo", { replace: true });
     }
   };
-  console.log(email, pwd);
+
   const ckBtn = email && pwd;
 
   const Button = styled.button`
@@ -41,10 +41,6 @@ const Login = () => {
     opacity: ${ckBtn ? 1 : 0.35};
     margin-bottom: 10px;
   `;
-
-  // if (user === undefined) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <FormContainer>
