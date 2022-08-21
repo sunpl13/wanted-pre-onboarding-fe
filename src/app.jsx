@@ -1,3 +1,4 @@
+import RequireAuth from "components/RequireAuth";
 import TodoListContainer from "components/TodoListContainer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
@@ -7,9 +8,30 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/todo" element={<TodoListContainer />} />
+        <Route
+          path="/"
+          element={
+            <RequireAuth>
+              <Login />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RequireAuth>
+              <Register />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/todo"
+          element={
+            <RequireAuth>
+              <TodoListContainer />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
