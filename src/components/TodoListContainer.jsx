@@ -20,7 +20,7 @@ const TodoListContainer = () => {
 
   const insertHandler = async (todo) => {
     const res = await Todo.createTodo(todo);
-    console.log(res);
+
     if (res.status === 201) {
       inputRef.current.value = ""; //성공하면 input 지우기
       getTodos();
@@ -33,7 +33,6 @@ const TodoListContainer = () => {
     if (res.status === 204) {
       getTodos();
     }
-    console.log(res);
   };
 
   const changeHandler = async (id, todo, isCompleted) => {
@@ -41,7 +40,6 @@ const TodoListContainer = () => {
     if (res.status === 200) {
       getTodos();
     }
-    console.log(res);
   };
 
   useEffect(() => {

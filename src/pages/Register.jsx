@@ -6,7 +6,6 @@ import { Common, Pretendard } from "styles/common";
 import { getFieldError } from "utils/validate";
 import auth from "api/auth";
 import { useNavigate } from "react-router";
-// import { ClipLoader } from "react-spinners";
 
 const Register = () => {
   const [wasSubmitted, setwasSubmitted] = useState(false);
