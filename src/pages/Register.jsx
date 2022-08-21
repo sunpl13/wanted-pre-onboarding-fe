@@ -3,21 +3,21 @@ import ConfirmPassword from "components/ConfirmPassword";
 import PasswordInput from "components/PasswordInput";
 import styled from "@emotion/styled";
 import { Common, Pretendard } from "styles/common";
-import { getFieldError } from "utills/validate";
+import { getFieldError } from "utils/validate";
+import auth from "api/auth";
+import { useNavigate } from "react-router";
 // import { ClipLoader } from "react-spinners";
 
 const Register = () => {
   const [wasSubmitted, setwasSubmitted] = useState(false);
   const [validatePassword, setvalidatePassword] = useState(false);
   const [touched, setTouched] = useState(false); //터치에 대한 state
-  const [buttonNameState, setbuttonNameState] = useState(false); //이메일 인증 메일 보내고 난 후 버튼 이름 변경 state
-  const [authNumber, setAuthNumber] = useState("");
-  const [visibleAuthInput, setVisibleAuthInput] = useState(false); //이메일 인증 보내지면 인증번호 입력할 input 컴포넌트 토글
-
   const [email, setemail] = useState("");
   const errorMessage = getFieldError(email, "이메일"); //에러 메시지
   const displayErrorMessage = (wasSubmitted || touched) && errorMessage;
   const [isSame, setIsSame] = useState(false);
+  const btnCheck = !displayErrorMessage && isSame && validatePassword;
+  const navigate = useNavigate();
 
   const Button = styled.button`
     width: 232px;
@@ -29,22 +29,20 @@ const Register = () => {
     padding-top: 8px;
     padding-bottom: 8px;
     background-color: ${Common.colors.BL500};
-    opacity: ${!validatePassword ? 1 : 0.35};
+    opacity: ${btnCheck ? 1 : 0.35};
   `;
 
-  const emailAuthHandler = (e) => {
-    e.preventDefault();
-  };
-
-  const checkAuth = (e) => {
-    e.preventDefault();
-  };
-
-  const registerHandler = (e) => {
+  const registerHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const fieldValues = Object.fromEntries(formData.entries());
     setwasSubmitted(true);
+    const res = await auth.signUp(email, fieldValues["비밀번호"]);
+
+    if (res.status === 201) {
+      alert("회원가입이 성공적으로 이루어졌습니다!");
+      navigate("/");
+    }
   };
 
   return (
