@@ -3,16 +3,54 @@ import Insert from "./Insert";
 import TodoList from "./TodoList";
 import { Common } from "styles/common";
 import styled from "@emotion/styled";
+import Todo from "api/todo";
+import { useEffect, useState } from "react";
 
 const TodoListContainer = () => {
+  const [todos, setTodos] = useState([]);
+
+  const getTodos = async () => {
+    const res = await Todo.getTodos();
+    console.log(res);
+    if (res.status === 200) {
+      setTodos(res.data);
+    }
+  };
+
+  const insertHandler = async (todo) => {
+    const res = await Todo.createTodo(todo);
+    console.log(res);
+  };
+
+  const deleteHandler = async (id) => {
+    const res = await Todo.deleteTodo(id);
+
+    if (res.status === 204) {
+      getTodos();
+    }
+    console.log(res);
+  };
+
+  const changeHandler = async (id, todo, isCompleted) => {
+    const res = await Todo.updateTodo(id, todo, isCompleted);
+    if (res.status === 200) {
+      getTodos();
+    }
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getTodos();
+  }, []);
+
   return (
     <Container>
       <Title>To Do List!</Title>
       <InsertContainer>
-        <Insert />
+        <Insert insertHandler={insertHandler} />
       </InsertContainer>
       <ListContainer>
-        <TodoList />
+        <TodoList todoList={todos} deleteHandler={deleteHandler} changeHandler={changeHandler} />
       </ListContainer>
     </Container>
   );

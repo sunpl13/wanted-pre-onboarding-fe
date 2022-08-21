@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { Common, Pretendard } from "styles/common";
 
-function Insert() {
+function Insert({ insertHandler }) {
   const [todo, settodo] = useState("");
-  const date = new Date();
 
-  // const onchangeHandler = (e) => {
-  //   settodo(e.target.value);
-  // };
+  const onchangeHandler = (e) => {
+    settodo(e.target.value);
+  };
+  const insert = () => {
+    insertHandler(todo);
+  };
 
   // //  todolist 생성 함수
   // const insertHandler = () => {
@@ -39,8 +41,8 @@ function Insert() {
 
   return (
     <Form>
-      <input type="text" />
-      <AddBtn>추가하기</AddBtn>
+      <input type="text" onChange={(e) => onchangeHandler(e)} />
+      <AddBtn onClick={insert}>추가하기</AddBtn>
     </Form>
   );
 }
