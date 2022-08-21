@@ -11,7 +11,7 @@ const emailValidate = (text) => {
 
 //비밀번호 정규식
 const passwordValidate = (password) => {
-  const regPassword = /^[A-Za-z0-9]{4,12}$/;
+  const regPassword = /^[A-Za-z0-9]{8,}$/;
   if (regPassword.test(password)) {
     return true;
   } else {
@@ -30,7 +30,7 @@ function getFieldError(value, name) {
       break;
     case "비밀번호":
       check = passwordValidate(value);
-      if (!check) return "비밀번호는 최소 8자, 하나 이상의 문자, 숫자 및 특수문자 입니다.";
+      if (!check) return "비밀번호는 최소 8자입니다.";
       break;
     default:
       return null;
